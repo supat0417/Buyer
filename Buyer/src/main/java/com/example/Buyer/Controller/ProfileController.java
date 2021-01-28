@@ -1,6 +1,7 @@
 package com.example.Buyer.Controller;
 
 import com.example.Buyer.Entity.ProfileEntity;
+import com.example.Buyer.Model.PaymentResponse;
 import com.example.Buyer.Service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +16,27 @@ import java.util.List;
 public class ProfileController {
 
     @Autowired
-    public ProfileService profileService;
+    private ProfileService profileService;
+
+    @GetMapping(path = "/payment/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PaymentResponse> GetPaymentFromSeller(@PathVariable String id)
+    {
+        PaymentResponse response = profileService.GetPaymentFromSeller(id);
+        if(response == null)
+        {
+            return ResponseEntity.notFound().build();
+        }
+        else
+        {
+            return ResponseEntity.ok(response);
+        }
+    }
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProfileEntity> GetProfileById(@PathVariable String id)
     {
         ProfileEntity response = profileService.GetProfileById(id);
+
         if(response == null)
         {
             return ResponseEntity.notFound().build();

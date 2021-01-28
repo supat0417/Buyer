@@ -21,7 +21,7 @@ public class ProfileEntity {
                     @Parameter(name = StringPrefixSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
                     @Parameter(name = StringPrefixSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "C_"),
                     @Parameter(name = StringPrefixSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%04d") })
-    private String merchant_id;
+    private String customer_id;
     private String profile_picture;
     private String firstname;
     private String lastname;

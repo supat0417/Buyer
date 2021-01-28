@@ -2,10 +2,16 @@ package com.example.Buyer.Service;
 
 
 import com.example.Buyer.Entity.ProfileEntity;
+import com.example.Buyer.Model.PaymentResponse;
 import com.example.Buyer.Repository.ProfileRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +19,9 @@ import java.util.Optional;
 @Service
 public class ProfileServiceImpl implements ProfileService{
     @Autowired
-    public ProfileRepository profileRepository;
+    private ProfileRepository profileRepository;
+    @Autowired
+    private WebClientService webClientService;
 
     @Override
     public ProfileEntity GetProfileById(String id) {
@@ -82,6 +90,11 @@ public class ProfileServiceImpl implements ProfileService{
             profile.setTel(tel);
         }
         return profile;
+    }
+
+    @Override
+    public PaymentResponse GetPaymentFromSeller(String id) {
+        return webClientService.findById(id).block();
     }
 
 }
